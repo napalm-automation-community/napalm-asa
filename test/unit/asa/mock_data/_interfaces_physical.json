@@ -1,0 +1,170 @@
+{
+  "kind": "collection#GigabitInterface",
+  "selfLink": "https://172.16.62.100/api/interfaces/physical",
+  "rangeInfo": {
+    "offset": 0,
+    "limit": 8,
+    "total": 8
+  },
+  "items": [
+    {
+      "kind": "object#GigabitInterface",
+      "selfLink": "https://172.16.62.100/api/interfaces/physical/GigabitEthernet0_API_SLASH_0",
+      "hardwareID": "GigabitEthernet0/0",
+      "interfaceDesc": "",
+      "channelGroupID": "",
+      "channelGroupMode": "active",
+      "duplex": "auto",
+      "flowcontrolOn": false,
+      "flowcontrolHigh": -1,
+      "flowcontrolLow": -1,
+      "flowcontrolPeriod": -1,
+      "forwardTrafficCX": false,
+      "forwardTrafficSFR": false,
+      "lacpPriority": -1,
+      "activeMacAddress": "",
+      "standByMacAddress": "",
+      "managementOnly": false,
+      "mtu": 1500,
+      "name": "inside",
+      "securityLevel": 100,
+      "shutdown": false,
+      "speed": "auto",
+      "ipAddress": {
+        "kind": "StaticIP",
+        "ip": {
+          "kind": "IPv4Address",
+          "value": "192.168.1.1"
+        },
+        "netMask": {
+          "kind": "IPv4NetMask",
+          "value": "255.255.255.0"
+        }
+      },
+      "ipv6Info": {
+        "enabled": false,
+        "autoConfig": false,
+        "enforceEUI64": false,
+        "managedAddressConfig": false,
+        "nsInterval": 1000,
+        "dadAttempts": 1,
+        "nDiscoveryPrefixList": [],
+        "otherStatefulConfig": false,
+        "routerAdvertInterval": 200,
+        "routerAdvertIntervalUnit": "sec",
+        "routerAdvertLifetime": 1800,
+        "suppressRouterAdvert": false,
+        "reachableTime": 0,
+        "ipv6Addresses": [],
+        "kind": "object#Ipv6InterfaceInfo"
+      },
+      "objectId": "GigabitEthernet0_API_SLASH_0"
+    },
+    {
+      "kind": "object#MgmtInterface",
+      "selfLink": "https://172.16.62.100/api/interfaces/physical/Management0_API_SLASH_0",
+      "hardwareID": "Management0/0",
+      "interfaceDesc": "",
+      "channelGroupID": "",
+      "channelGroupMode": "active",
+      "duplex": "auto",
+      "flowcontrolOn": false,
+      "flowcontrolHigh": -1,
+      "flowcontrolLow": -1,
+      "flowcontrolPeriod": -1,
+      "forwardTrafficCX": false,
+      "forwardTrafficSFR": false,
+      "lacpPriority": -1,
+      "activeMacAddress": "",
+      "standByMacAddress": "",
+      "managementOnly": true,
+      "mtu": 1500,
+      "name": "mgmt",
+      "securityLevel": 100,
+      "shutdown": false,
+      "speed": "auto",
+      "ipAddress": {
+        "kind": "StaticIP",
+        "ip": {
+          "kind": "IPv4Address",
+          "value": "172.16.62.100"
+        },
+        "netMask": {
+          "kind": "IPv4NetMask",
+          "value": "255.255.255.0"
+        }
+      },
+      "ipv6Info": {
+        "enabled": false,
+        "autoConfig": false,
+        "enforceEUI64": false,
+        "managedAddressConfig": false,
+        "nsInterval": 1000,
+        "dadAttempts": 1,
+        "nDiscoveryPrefixList": [],
+        "otherStatefulConfig": false,
+        "routerAdvertInterval": 200,
+        "routerAdvertIntervalUnit": "sec",
+        "routerAdvertLifetime": 1800,
+        "suppressRouterAdvert": false,
+        "reachableTime": 0,
+        "ipv6Addresses": [],
+        "kind": "object#Ipv6InterfaceInfo"
+      },
+      "objectId": "Management0_API_SLASH_0"
+    },
+    {
+      "kind": "object#GigabitInterface",
+      "selfLink": "https://172.16.62.100/api/interfaces/physical/GigabitEthernet0_API_SLASH_1",
+      "hardwareID": "GigabitEthernet0/1",
+      "interfaceDesc": "",
+      "channelGroupID": "",
+      "channelGroupMode": "active",
+      "duplex": "auto",
+      "flowcontrolOn": false,
+      "flowcontrolHigh": -1,
+      "flowcontrolLow": -1,
+      "flowcontrolPeriod": -1,
+      "forwardTrafficCX": false,
+      "forwardTrafficSFR": false,
+      "lacpPriority": -1,
+      "activeMacAddress": "",
+      "standByMacAddress": "",
+      "managementOnly": false,
+      "mtu": 1500,
+      "name": "outside",
+      "securityLevel": 0,
+      "shutdown": false,
+      "speed": "auto",
+      "ipAddress": {
+        "kind": "StaticIP",
+        "ip": {
+          "kind": "IPv4Address",
+          "value": "192.168.2.1"
+        },
+        "netMask": {
+          "kind": "IPv4NetMask",
+          "value": "255.255.255.0"
+        }
+      },
+      "ipv6Info": {
+        "enabled": false,
+        "autoConfig": false,
+        "enforceEUI64": false,
+        "managedAddressConfig": false,
+        "nsInterval": 1000,
+        "dadAttempts": 1,
+        "nDiscoveryPrefixList": [],
+        "otherStatefulConfig": false,
+        "routerAdvertInterval": 200,
+        "routerAdvertIntervalUnit": "sec",
+        "routerAdvertLifetime": 1800,
+        "suppressRouterAdvert": false,
+        "reachableTime": 0,
+        "ipv6Addresses": [],
+        "kind": "object#Ipv6InterfaceInfo"
+      },
+      "objectId": "GigabitEthernet0_API_SLASH_1"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "kind": "object#Version",
+  "selfLink": "/api/monitoring/device/version",
+  "firewallMode": "Router",
+  "totalFlashinMB": 129024,
+  "deviceType": "ASAv",
+  "upTimeinSeconds": 5280,
+  "asaVersion": "9.4(1)205",
+  "currentTimeinSeconds": 1481132009
+}
