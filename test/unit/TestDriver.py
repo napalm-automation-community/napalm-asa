@@ -88,7 +88,6 @@ class FakeDevice:
         filename = re.sub(r'\/', '_', endpoint)
 
         if data is not None:
-            print data
             parsed_data = json.loads(data)
             if "commands" in parsed_data:
                 list_of_commands = parsed_data.get("commands")

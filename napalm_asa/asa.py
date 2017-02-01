@@ -93,19 +93,19 @@ class ASADriver(NetworkDriver):
     """Napalm driver for Cisco ASA."""
 
     def __init__(self,
-                 hostname='192.168.200.50',
-                 username='cisco',
-                 password='cisco',
-                 port='443',
-                 timeout=30):
+                 hostname,
+                 username,
+                 password,
+                 timeout=60,
+                 optional_args=None):
 
         self.username = username
         self.password = password
         self.hostname = hostname
-        self.port = port
+        self.port = 443
         self.timeout = timeout
         self.up = False
-        self.base_url = 'https://' + self.hostname + ':' + self.port + '/api'
+        self.base_url = "https://{}:{}/api".format(self.hostname, self.port)
         self.device = RespFetcherHttps(self.username, self.password, self.base_url, self.timeout)
 
     def _send_request(self, endpoint, data=None):
@@ -235,11 +235,32 @@ class ASADriver(NetworkDriver):
 
         return interfaces
 
-    def get_config(self):
-        command = "show startup-config"
-        results = self.cli([command])
+    def get_config(self, retrieve='all'):
 
-        return results[command]
+        config = {
+            'startup': '',
+            'running': '',
+            'candidate': ''
+        }
+
+        commands = []
+        startup_cmd = "show startup-config"
+        running_cmd = "show running-config"
+
+        if retrieve.lower() in ['startup', 'all']:
+            commands.append(startup_cmd)
+        if retrieve.lower() in ['running', 'all']:
+            commands.append(running_cmd)
+
+        if retrieve.lower() in ['running', 'startup', 'all']:
+            results = self.cli(commands)
+
+        if retrieve.lower() in ['startup', 'all']:
+            config['startup'] = results[startup_cmd]
+        if retrieve.lower() in ['running', 'all']:
+            config['running'] = results[running_cmd]
+
+        return config
 
     def get_interfaces_ip(self):
         interfaces = {}
@@ -256,7 +277,8 @@ class ASADriver(NetworkDriver):
                     mask = ipv4['netMask']['value']
                     network = ip + '/' + mask
                     prefix_length = IPNetwork(network).prefixlen
-                    interfaces[int_info['hardwareID']]['ipv4'] = {ip: {'prefix_length': prefix_length}}
+                    interfaces[int_info['hardwareID']]['ipv4'] = \
+                        {ip: {'prefix_length': prefix_length}}
 
                 if len(int_info['ipv6Info']['ipv6Addresses']) > 0:
                     if int_info['hardwareID'] not in interfaces:
@@ -266,6 +288,7 @@ class ASADriver(NetworkDriver):
                     for ipv6 in int_info['ipv6Info']['ipv6Addresses']:
                         ip = ipv6['address']['value']
                         prefix_length = ipv6['prefixLength']
-                        interfaces[int_info['hardwareID']]['ipv6'][ip] = {'prefix_length': prefix_length}
+                        interfaces[int_info['hardwareID']]['ipv6'][ip] = \
+                            {'prefix_length': prefix_length}
 
         return interfaces
