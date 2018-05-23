@@ -20,8 +20,8 @@ Read https://napalm.readthedocs.io for more information.
 
 from __future__ import unicode_literals
 
-import ssl
-import urllib2
+import requests
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 import json
 import base64
 import re
@@ -35,8 +35,7 @@ from napalm.base.exceptions import (
     ConnectionException,
     CommandErrorException,
 )
-
-ssl._create_default_https_context = ssl._create_unverified_context
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
 class RespFetcherHttps:
@@ -61,28 +60,20 @@ class RespFetcherHttps:
     def get_resp(self, endpoint="", data=None):
         """Get response from device and returne parsed json."""
         full_url = self.base_url + endpoint
-        req = urllib2.Request(full_url, data, self.headers)
-        base64string = self.base64_str
-        req.add_header("Authorization", "Basic %s" % base64string)
         f = None
         try:
-            try:
-                f = urllib2.urlopen(req, data, self.timeout)
-                status_code = f.getcode()
-                if (status_code != 200):
-                    raise CommandErrorException("Operation returned an error: {}".format(status_code))
-                resp = f.read()
-                json_resp = json.loads(resp)
-                return json_resp
-            finally:
-                if f:
-                    f.close()
-        except urllib2.URLError, e:
-            if hasattr(e, 'reason'):
-                ConnectionException(py23_compat.text_type(e))
+            if data is not None:
+                f = requests.post(full_url, auth=(self.username, self.password), data=data,
+                                  headers=self.headers, timeout=self.timeout, verify=False)
+            else:
+                f = requests.get(full_url, auth=(self.username, self.password),
+                                 headers=self.headers, timeout=self.timeout, verify=False)
+            if (f.status_code != 200):
+                raise CommandErrorException("Operation returned an error: {}".format(f.status_code))
 
-            elif hasattr(e, 'code'):
-                ConnectionException(py23_compat.text_type(e))
+            return f.json()
+        except requests.exceptions.RequestException as e:
+            raise ConnectionException(py23_compat.text_type(e))
 
 
 class ASADriver(NetworkDriver):
