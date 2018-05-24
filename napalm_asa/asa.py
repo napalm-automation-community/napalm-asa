@@ -86,7 +86,7 @@ class ASADriver(NetworkDriver):
         self.username = username
         self.password = password
         self.hostname = hostname
-        self.port = 443
+        self.port = optional_args.get('port',443)
         self.timeout = timeout
         self.up = False
         self.base_url = "https://{}:{}/api".format(self.hostname, self.port)
