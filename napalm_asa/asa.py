@@ -23,7 +23,6 @@ from __future__ import unicode_literals
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 import json
-import base64
 import re
 
 # import third party lib
@@ -52,8 +51,6 @@ class RespFetcherHttps:
         self.username = username
         self.password = password
         self.base_url = base_url
-        self.base64_str = base64.encodestring('%s:%s' % (username,
-                                              password)).replace('\n', '')
         self.timeout = timeout
         self.headers = {'Content-Type': 'application/json'}
 
