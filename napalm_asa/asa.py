@@ -93,11 +93,11 @@ class RespFetcherHttps:
         f = None
         try:
             if data is not None:
-                f = requests.post(full_url, auth=(self.username, self.password), data=data,
-                                  headers=self.headers, timeout=self.timeout, verify=False)
+                f = self.session.post(full_url, data=data,
+                                      headers=self.headers, timeout=self.timeout, verify=False)
             else:
-                f = requests.get(full_url, auth=(self.username, self.password),
-                                 headers=self.headers, timeout=self.timeout, verify=False)
+                f = self.session.get(full_url,
+                                     headers=self.headers, timeout=self.timeout, verify=False)
             if (f.status_code != 200):
                 raise CommandErrorException("Operation returned an error: {}".format(f.status_code))
 
