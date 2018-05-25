@@ -9,7 +9,7 @@ with open("requirements.txt", "r") as fs:
 
 setup(
     name="napalm-asa",
-    version="0.1.0",
+    version="0.1.1",
     packages=find_packages(),
     author="Diogo Assumpcao",
     author_email="diogo.assumpcao@gmail.com",
