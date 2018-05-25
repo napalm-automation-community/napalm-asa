@@ -39,6 +39,16 @@ class PatchedASADriver(asa.ASADriver):
         self.patched_attrs = ['device']
         self.device = FakeASADevice()
 
+    def _authenticate(self):
+        """Fake token authentication"""
+
+        return (True, None)
+
+    def _delete_token(self):
+        """Fake Delete auth token."""
+
+        return (True, None)
+
 
 class FakeASADevice(BaseTestDouble):
     """ASA device test double."""
