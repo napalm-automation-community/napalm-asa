@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/napalm-automation-community/napalm-asa.svg?branch=master)](https://travis-ci.org/napalm-automation-community/napalm-asa)
+[![PyPI](https://img.shields.io/pypi/v/napalm-asa.svg)](https://pypi.python.org/pypi/napalm-asa)
+
 # napalm-asa
 
 This is a [NAPALM](https://github.com/napalm-automation/napalm) community driver for the Cisco ASA platform.
