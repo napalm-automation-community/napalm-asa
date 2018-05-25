@@ -24,6 +24,7 @@ import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 import json
 import re
+from collections import OrderedDict
 
 # import third party lib
 from netaddr import IPNetwork
@@ -198,7 +199,7 @@ class ASADriver(NetworkDriver):
 
     def get_interfaces(self):
         """Get Interfaces."""
-        interfaces = {}
+        interfaces = OrderedDict()
         response = self._send_request('/interfaces/physical')
 
         if response['rangeInfo']['total'] > 0:

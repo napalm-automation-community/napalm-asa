@@ -2,9 +2,9 @@
   "os_version": "9.4(1)205",
   "uptime": 5280,
   "interface_list": [
-    "GigabitEthernet0/1",
     "GigabitEthernet0/0",
-    "Management0/0"
+    "Management0/0",
+    "GigabitEthernet0/1"
   ],
   "vendor": "Cisco Systems",
   "serial_number": "9AVP5MLG543",
