@@ -53,7 +53,39 @@ class RespFetcherHttps:
         self.password = password
         self.base_url = base_url
         self.timeout = timeout
+        self.token = ""
+        self.session = requests.Session()
         self.headers = {'Content-Type': 'application/json'}
+
+    def get_auth_token(self):
+        """ Authenticate with user and password to get an auth token."""
+        full_url = self.base_url + "/tokenservices"
+        try:
+            token_request = self.session.post(full_url, auth=(self.username, self.password),
+                                              data="", timeout=self.timeout, verify=False)
+            if token_request.status_code is 204 and 'X-Auth-Token' in token_request.headers.keys():
+                self.token = token_request.headers['X-Auth-Token']
+                self.session.headers.update({'X-Auth-Token': token_request.headers['X-Auth-Token']})
+                return (True, None)
+            else:
+                return (False, token_request.status_code)
+        except requests.exceptions.RequestException as e:
+            raise ConnectionException(py23_compat.text_type(e))
+
+    def delete_token(self):
+        """Delete auth token."""
+        full_url = self.base_url + "/tokenservices/{}".format(self.token)
+        try:
+            token_delete_request = self.session.delete(full_url,
+                                                       auth=(self.username, self.password),
+                                                       timeout=self.timeout, verify=False)
+            if token_delete_request.status_code is 204:
+                self.session.headers.pop('X-Auth-Token', None)
+                return (True, None)
+            else:
+                return (False, token_delete_request.status_code)
+        except requests.exceptions.RequestException as e:
+            raise ConnectionException(py23_compat.text_type(e))
 
     def get_resp(self, endpoint="", data=None):
         """Get response from device and returne parsed json."""
@@ -61,11 +93,11 @@ class RespFetcherHttps:
         f = None
         try:
             if data is not None:
-                f = requests.post(full_url, auth=(self.username, self.password), data=data,
-                                  headers=self.headers, timeout=self.timeout, verify=False)
+                f = self.session.post(full_url, data=data,
+                                      headers=self.headers, timeout=self.timeout, verify=False)
             else:
-                f = requests.get(full_url, auth=(self.username, self.password),
-                                 headers=self.headers, timeout=self.timeout, verify=False)
+                f = self.session.get(full_url,
+                                     headers=self.headers, timeout=self.timeout, verify=False)
             if (f.status_code != 200):
                 raise CommandErrorException("Operation returned an error: {}".format(f.status_code))
 
@@ -93,6 +125,19 @@ class ASADriver(NetworkDriver):
         self.up = False
         self.base_url = "https://{}:{}/api".format(self.hostname, self.port)
         self.device = RespFetcherHttps(self.username, self.password, self.base_url, self.timeout)
+
+    def _authenticate(self):
+        """Authenticate with device."""
+        auth_result = self.device.get_auth_token()
+
+        return auth_result
+
+    def _delete_token(self):
+        """Delete auth token."""
+
+        delete_result = self.device.delete_token()
+
+        return delete_result
 
     def _send_request(self, endpoint, data=None):
         """Send request method."""
@@ -137,18 +182,23 @@ class ASADriver(NetworkDriver):
         and credentials are valid before moving on to other, more complex,
         requests.
         """
-        sn = self._send_request('/monitoring/serialnumber')
-        if sn['serialNumber'] is not None:
+        auth_result, code = self._authenticate()
+        if auth_result:
             self.up = True
             return True
         else:
             self.up = False
-            return False
+            raise ConnectionException('Cannot connect to {}. Error {}'.format(self.hostname, code))
 
     def close(self):
         """Mark the connection to the device as closed."""
-        self.up = False
-        return True
+        delete_result, code = self._delete_token()
+
+        if delete_result:
+            self.up = False
+            return True
+        else:
+            raise ConnectionException('Cannot connect to {}. Error {}'.format(self.hostname, code))
 
     def cli(self, commands):
         """Run CLI commands via the API."""
