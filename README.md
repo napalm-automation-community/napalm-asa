@@ -33,7 +33,7 @@ Check the full [NAPALM Docs](https://napalm.readthedocs.io/en/latest/index.html)
 
 | Getter                    | Support  |
 |---------------------------|----------|
-| get_arp_table             |  ❌      |
+| get_arp_table             |  ✅      |
 | get_bgp_config            |  ❌      |
 | get_bgp_neighbors         |  ❌      |
 | get_bgp_neighbors_detail  |  ❌      |
