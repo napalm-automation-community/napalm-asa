@@ -87,17 +87,19 @@ class RespFetcherHttps:
         except requests.exceptions.RequestException as e:
             raise ConnectionException(py23_compat.text_type(e))
 
-    def get_resp(self, endpoint="", data=None):
+    def get_resp(self, endpoint="", data=None, params={}):
         """Get response from device and returne parsed json."""
         full_url = self.base_url + endpoint
         f = None
         try:
             if data is not None:
                 f = self.session.post(full_url, data=data,
-                                      headers=self.headers, timeout=self.timeout, verify=False)
+                                      headers=self.headers, timeout=self.timeout,
+                                      params=params, verify=False)
             else:
                 f = self.session.get(full_url,
-                                     headers=self.headers, timeout=self.timeout, verify=False)
+                                     headers=self.headers, timeout=self.timeout,
+                                     params=params, verify=False)
             if (f.status_code != 200):
                 raise CommandErrorException("Operation returned an error: {}".format(f.status_code))
 
@@ -146,8 +148,22 @@ class ASADriver(NetworkDriver):
         else:
             response = self.device.get_resp(endpoint, json.dumps(data))
 
-        parsed_response = response
-        return parsed_response
+        if 'rangeInfo' in response:
+            if response['rangeInfo']['limit'] < response['rangeInfo']['total']:
+                fetched_items = len(response['items'])
+                while fetched_items < response['rangeInfo']['total']:
+                    offset = fetched_items
+                    params = {'offset': offset}
+                    if data is None:
+                        r = self.device.get_resp(endpoint=endpoint, params=params)
+                    else:
+                        r = self.device.get_resp(endpoint=endpoint, data=json.dumps(data),
+                                                 params=params)
+
+                    fetched_items = fetched_items + len(r['items'])
+                    response['items'] = response['items'] + r['items']
+
+        return response
 
     def _get_interfaces_details(self, interfaces):
         commands = []
@@ -334,3 +350,24 @@ class ASADriver(NetworkDriver):
                             {'prefix_length': prefix_length}
 
         return interfaces
+
+    def get_arp_table(self):
+        """Get ARP Table."""
+        arp_table = []
+        response = self._send_request('/monitoring/arp')
+
+        if response['rangeInfo']['total'] > 0:
+            for item in response['items']:
+                mac = item['macAddress'].replace('.', '')
+                regex = re.compile(r'.{2}')
+                mac = ":".join(re.findall(regex, mac))
+                arp_table.append(
+                    {
+                        'interface': item['interface'],
+                        'ip': item['ipAddress'],
+                        'mac': mac,
+                        'age': 0.0
+                    }
+                )
+
+        return arp_table

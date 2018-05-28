@@ -1,0 +1,35 @@
+{
+    "kind": "collection#Arp",
+    "selfLink": "https://172.16.62.100/api/monitoring/arp",
+    "rangeInfo": {
+      "offset": 0,
+      "limit": 1,
+      "total": 1
+    },
+    "items": [
+          {
+            "interface": "inside",
+            "ipAddress": "10.10.20.253",
+            "macAddress": "0200.5e02.0253",
+            "proxyArp": false
+          },
+          {
+            "interface": "inside",
+            "ipAddress": "10.10.20.252",
+            "macAddress": "0200.5e02.0252",
+            "proxyArp": false
+          },
+          {
+            "interface": "inside",
+            "ipAddress": "10.10.20.251",
+            "macAddress": "0200.5e02.0251",
+            "proxyArp": false
+          },
+          {
+            "interface": "inside",
+            "ipAddress": "10.10.20.250",
+            "macAddress": "0200.5e02.0250",
+            "proxyArp": false
+          }
+    ]
+  }
