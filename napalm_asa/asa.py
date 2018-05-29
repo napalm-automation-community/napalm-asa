@@ -87,7 +87,7 @@ class RespFetcherHttps:
         except requests.exceptions.RequestException as e:
             raise ConnectionException(py23_compat.text_type(e))
 
-    def get_resp(self, endpoint="", data=None, params={}):
+    def get_resp(self, endpoint="", data=None, params={}, throw=True):
         """Get response from device and returne parsed json."""
         full_url = self.base_url + endpoint
         f = None
@@ -101,11 +101,27 @@ class RespFetcherHttps:
                                      headers=self.headers, timeout=self.timeout,
                                      params=params, verify=False)
             if (f.status_code != 200):
-                raise CommandErrorException("Operation returned an error: {}".format(f.status_code))
+                if throw:
+                    errMsg = "Operation returned an error: {}".format(f.status_code)
+                    raise CommandErrorException(errMsg)
+                else:
+                    return False
 
             return f.json()
         except requests.exceptions.RequestException as e:
-            raise ConnectionException(py23_compat.text_type(e))
+            if throw:
+                raise ConnectionException(py23_compat.text_type(e))
+            else:
+                return False
+
+    def has_active_token(self):
+        status = False
+        if "X-Auth-Token" in self.session.headers:
+                response = self.get_resp('/monitoring/serialnumber',  throw=False)
+                if 'kind' in response and response['kind'] == "object#QuerySerialNumber":
+                    status = True
+
+        return status
 
 
 class ASADriver(NetworkDriver):
@@ -371,3 +387,9 @@ class ASADriver(NetworkDriver):
                 )
 
         return arp_table
+
+    def is_alive(self):
+        """Check if connection is still valid."""
+        status = {"is_alive": self.device.has_active_token()}
+
+        return status

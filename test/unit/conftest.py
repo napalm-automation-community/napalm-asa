@@ -67,3 +67,7 @@ class FakeASADevice(BaseTestDouble):
         output = self.read_json_file('test/unit/asa/mock_data/{}.json'.format(filename))
         """Fake an API request to the device by just returning the content of a file."""
         return output
+
+    def has_active_token(self):
+        """Fake method to return token status"""
+        return True
