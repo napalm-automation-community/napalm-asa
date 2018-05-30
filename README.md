@@ -58,6 +58,6 @@ Check the full [NAPALM Docs](https://napalm.readthedocs.io/en/latest/index.html)
 | get_route_to              |  ❌      |
 | get_snmp_information      |  ❌      |
 | get_users                 |  ❌      |
-| is_alive                  |  ❌      |
+| is_alive                  |  ✅      |
 | ping                      |  ❌      |
 | traceroute                |  ❌      |
