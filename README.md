@@ -61,3 +61,7 @@ Check the full [NAPALM Docs](https://napalm.readthedocs.io/en/latest/index.html)
 | is_alive                  |  ✅      |
 | ping                      |  ❌      |
 | traceroute                |  ❌      |
+
+## Setting up a Lab Environment
+
+Mock tests are usefull for quickly iterating when writing a new getter of fixing a bug, but you do want to test on a 'real' device to make sure everything works as expected. One of the most convenient ways is to use an ASAv running on Virtualbox + Vagrant. @bobthebutcher has a nice write up on [how to setup an ASAv with Vagrant.](https://codingpackets.com/blog/cisco-asa-vagrant-box-install/)
