@@ -157,7 +157,7 @@ class ASADriver(NetworkDriver):
 
         return delete_result
 
-    def _send_request(self, endpoint, data=None):
+    def _send_request(self, endpoint, data=None, throw=True):
         """Send request method."""
         if data is None:
             response = self.device.get_resp(endpoint)
@@ -171,10 +171,10 @@ class ASADriver(NetworkDriver):
                     offset = fetched_items
                     params = {'offset': offset}
                     if data is None:
-                        r = self.device.get_resp(endpoint=endpoint, params=params)
+                        r = self.device.get_resp(endpoint=endpoint, params=params, throw=throw)
                     else:
                         r = self.device.get_resp(endpoint=endpoint, data=json.dumps(data),
-                                                 params=params)
+                                                 params=params, throw=throw)
 
                     fetched_items = fetched_items + len(r['items'])
                     response['items'] = response['items'] + r['items']
@@ -282,29 +282,39 @@ class ASADriver(NetworkDriver):
     def get_interfaces(self):
         """Get Interfaces."""
         interfaces = OrderedDict()
-        response = self._send_request('/interfaces/physical')
+        endpoints = ('/interfaces/physical', '/interfaces/vlan')
+                    # , '/interfaces/portchannel',
+                    #  '/interfaces/redundant', '/interfaces/bvi', '/api/interfaces/setup',
+                    #  '/interfaces/firepower/93xx/portchannel')
 
-        if response['rangeInfo']['total'] > 0:
+        responses = []
 
-            for int_info in response['items']:
-                interfaces[int_info['hardwareID']] = {
-                    'is_up': False,
-                    'is_enabled': not int_info['shutdown'],
-                    'description': int_info['interfaceDesc'],
-                    'last_flapped': -1.0,
-                    'speed': 0,
-                    'mac_address': u'',
-                }
+        for endpoint in endpoints:
+            responses.append(self._send_request(endpoint, throw=False))
+        
+        #response = self._send_request('/interfaces/physical', throw=False)
+        for response in responses:
+            if response['rangeInfo']['total'] > 0:
 
-            ifs = []
-            for if_name in interfaces:
-                ifs.append(if_name)
+                for int_info in response['items']:
+                    interfaces[int_info['hardwareID']] = {
+                        'is_up': False,
+                        'is_enabled': not int_info['shutdown'],
+                        'description': int_info['interfaceDesc'],
+                        'last_flapped': -1.0,
+                        'speed': 0,
+                        'mac_address': u'',
+                    }
 
-            ifs_details = self._get_interfaces_details(ifs)
+        ifs = []
+        for if_name in interfaces:
+            ifs.append(if_name)
 
-            for if_name, details in ifs_details.items():
-                interfaces[if_name]['mac_address'] = details['mac_address']
-                interfaces[if_name]['is_up'] = details['is_up']
+        ifs_details = self._get_interfaces_details(ifs)
+
+        for if_name, details in ifs_details.items():
+            interfaces[if_name]['mac_address'] = details['mac_address']
+            interfaces[if_name]['is_up'] = details['is_up']
 
         return interfaces
 
