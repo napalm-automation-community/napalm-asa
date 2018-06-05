@@ -22,5 +22,13 @@
     "is_up": true,
     "mac_address": "008d.e011.ef00",
     "speed": 0
-  }
+  },
+  "Management0/0.2": {
+    "is_up": true,
+    "is_enabled": true,
+    "description": "SubManagement",
+    "last_flapped": -1,
+    "speed": 0,
+    "mac_address": "5e00.0000.0000"
+}
 }
