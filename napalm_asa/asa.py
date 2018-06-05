@@ -35,6 +35,8 @@ from napalm.base.exceptions import (
     ConnectionException,
     CommandErrorException,
 )
+from napalm_asa._SUPPORTED_INTERFACES_ENDPOINTS import SUPPORTED_INTERFACES_ENDPOINTS 
+
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
@@ -282,14 +284,9 @@ class ASADriver(NetworkDriver):
     def get_interfaces(self):
         """Get Interfaces."""
         interfaces = OrderedDict()
-        endpoints = ('/interfaces/physical', '/interfaces/vlan')
-                    # , '/interfaces/portchannel',
-                    #  '/interfaces/redundant', '/interfaces/bvi', '/api/interfaces/setup',
-                    #  '/interfaces/firepower/93xx/portchannel')
-
         responses = []
 
-        for endpoint in endpoints:
+        for endpoint in SUPPORTED_INTERFACES_ENDPOINTS:
             responses.append(self._send_request(endpoint, throw=False))
         
         #response = self._send_request('/interfaces/physical', throw=False)
