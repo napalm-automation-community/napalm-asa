@@ -1,0 +1,46 @@
+{
+  "kind": "collection#RedundantInterface",
+  "selfLink": "https://192.168.218.66/api/interfaces/redundant",
+  "rangeInfo": {
+    "offset": 0,
+    "limit": 1,
+    "total": 1
+  },
+  "items": [
+    {
+      "kind": "object#RedundantInterface",
+      "selfLink": "https://192.168.218.66/api/interfaces/redundant/Redundant1",
+      "hardwareID": "Redundant1",
+      "interfaceDesc": "",
+      "forwardTrafficCX": false,
+      "forwardTrafficSFR": false,
+      "lacpPriority": -1,
+      "activeMacAddress": "",
+      "standByMacAddress": "",
+      "managementOnly": false,
+      "mtu": 1500,
+      "name": "",
+      "securityLevel": -1,
+      "shutdown": false,
+      "ipAddress": "NoneSelected",
+      "ipv6Info": {
+        "enabled": false,
+        "autoConfig": false,
+        "enforceEUI64": false,
+        "managedAddressConfig": false,
+        "nsInterval": 1000,
+        "dadAttempts": 1,
+        "nDiscoveryPrefixList": [],
+        "otherStatefulConfig": false,
+        "routerAdvertInterval": 200,
+        "routerAdvertIntervalUnit": "sec",
+        "routerAdvertLifetime": 1800,
+        "suppressRouterAdvert": false,
+        "reachableTime": 0,
+        "ipv6Addresses": [],
+        "kind": "object#Ipv6InterfaceInfo"
+      },
+      "objectId": "Redundant1"
+    }
+  ]
+}

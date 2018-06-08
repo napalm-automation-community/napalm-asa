@@ -1,0 +1,109 @@
+{
+    "kind": "collection#PCInterface",
+    "selfLink": "https://192.168.218.66/api/interfaces/portchannel",
+    "rangeInfo": {
+        "offset": 0,
+        "limit": 2,
+        "total": 2
+    },
+    "items": [
+        {
+            "kind": "object#PCInterface",
+            "selfLink": "https://192.168.218.66/api/interfaces/portchannel/Port-channel1",
+            "hardwareID": "Port-channel1",
+            "interfaceDesc": "Port-channel1",
+            "forwardTrafficCX": false,
+            "forwardTrafficSFR": false,
+            "activeMacAddress": "",
+            "standByMacAddress": "",
+            "managementOnly": false,
+            "mtu": 1500,
+            "name": "",
+            "securityLevel": -1,
+            "shutdown": false,
+            "channelGroupMin": 1,
+            "channelGroupMax": 8,
+            "channelGroupLoadBal": 4,
+            "ipAddress": "NoneSelected",
+            "pcMemberInterfaces": [
+                {
+                    "kind": "objectRef#Interface",
+                    "refLink": "https://192.168.218.66/api/interfaces/physical/GigabitEthernet0_API_SLASH_0",
+                    "objectId": "GigabitEthernet0_API_SLASH_0"
+                },
+                {
+                    "kind": "objectRef#Interface",
+                    "refLink": "https://192.168.218.66/api/interfaces/physical/GigabitEthernet0_API_SLASH_1",
+                    "objectId": "GigabitEthernet0_API_SLASH_1"
+                }
+            ],
+            "ipv6Info": {
+                "enabled": false,
+                "autoConfig": false,
+                "enforceEUI64": false,
+                "managedAddressConfig": false,
+                "nsInterval": 1000,
+                "dadAttempts": 1,
+                "nDiscoveryPrefixList": [],
+                "otherStatefulConfig": false,
+                "routerAdvertInterval": 200,
+                "routerAdvertIntervalUnit": "sec",
+                "routerAdvertLifetime": 1800,
+                "suppressRouterAdvert": false,
+                "reachableTime": 0,
+                "ipv6Addresses": [],
+                "kind": "object#Ipv6InterfaceInfo"
+            },
+            "objectId": "Port-channel1"
+        },
+        {
+            "kind": "object#PCInterface",
+            "selfLink": "https://192.168.218.66/api/interfaces/portchannel/Port-channel2",
+            "hardwareID": "Port-channel2",
+            "interfaceDesc": "Port-channel2",
+            "forwardTrafficCX": false,
+            "forwardTrafficSFR": false,
+            "activeMacAddress": "",
+            "standByMacAddress": "",
+            "managementOnly": false,
+            "mtu": 1500,
+            "name": "",
+            "securityLevel": -1,
+            "shutdown": false,
+            "channelGroupMin": 1,
+            "channelGroupMax": 8,
+            "channelGroupLoadBal": 4,
+            "ipAddress": "NoneSelected",
+            "pcMemberInterfaces": [
+                {
+                    "kind": "objectRef#Interface",
+                    "refLink": "https://192.168.218.66/api/interfaces/physical/GigabitEthernet0_API_SLASH_2",
+                    "objectId": "GigabitEthernet0_API_SLASH_2"
+                },
+                {
+                    "kind": "objectRef#Interface",
+                    "refLink": "https://192.168.218.66/api/interfaces/physical/GigabitEthernet0_API_SLASH_3",
+                    "objectId": "GigabitEthernet0_API_SLASH_3"
+                }
+            ],
+            "ipv6Info": {
+                "enabled": false,
+                "autoConfig": false,
+                "enforceEUI64": false,
+                "managedAddressConfig": false,
+                "nsInterval": 1000,
+                "dadAttempts": 1,
+                "nDiscoveryPrefixList": [],
+                "otherStatefulConfig": false,
+                "routerAdvertInterval": 200,
+                "routerAdvertIntervalUnit": "sec",
+                "routerAdvertLifetime": 1800,
+                "suppressRouterAdvert": false,
+                "reachableTime": 0,
+                "ipv6Addresses": [],
+                "kind": "object#Ipv6InterfaceInfo"
+            },
+            "objectId": "Port-channel2"
+        }
+    ]
+}
