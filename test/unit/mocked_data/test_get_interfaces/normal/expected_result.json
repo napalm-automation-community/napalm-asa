@@ -30,5 +30,29 @@
     "last_flapped": -1,
     "speed": 0,
     "mac_address": "5e00.0000.0000"
-}
+  },
+  "Redundant1": {
+    "is_up": false,
+    "is_enabled": true,
+    "description": "",
+    "last_flapped": -1,
+    "speed": 0,
+    "mac_address": ""
+  },
+  "Port-channel1": {
+    "is_up": true,
+    "is_enabled": true,
+    "description": "Port-channel1",
+    "last_flapped": -1,
+    "speed": 0,
+    "mac_address": "1c6a.7ac1.3db9"
+  },
+  "Port-channel2": {
+    "is_up": true,
+    "is_enabled": true,
+    "description": "Port-channel2",
+    "last_flapped": -1,
+    "speed": 0,
+    "mac_address": "1c6a.7ac1.3db8"
+  }
 }

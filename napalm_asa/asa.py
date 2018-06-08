@@ -35,7 +35,7 @@ from napalm.base.exceptions import (
     ConnectionException,
     CommandErrorException,
 )
-from napalm_asa._SUPPORTED_INTERFACES_ENDPOINTS import SUPPORTED_INTERFACES_ENDPOINTS 
+from napalm_asa._SUPPORTED_INTERFACES_ENDPOINTS import SUPPORTED_INTERFACES_ENDPOINTS
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
@@ -193,7 +193,10 @@ class ASADriver(NetworkDriver):
         ifs_details = {}
         for command, details in results.items():
             if_name = re.search(r"show interface (.*)", command).group(1)
-            mac = re.search(r"MAC address (.{14}),", details).group(1)
+            match_mac = re.search(r"MAC address (.{14}),", details)
+            mac = ""
+            if match_mac is not None:
+                mac = match_mac.group(1)
 
             match_if_status = re.search(r"line protocol is (.{2,4})\n", results[command])
             if match_if_status.group(1) == 'up':
@@ -288,8 +291,7 @@ class ASADriver(NetworkDriver):
 
         for endpoint in SUPPORTED_INTERFACES_ENDPOINTS:
             responses.append(self._send_request(endpoint, throw=False))
-        
-        #response = self._send_request('/interfaces/physical', throw=False)
+
         for response in responses:
             if response['rangeInfo']['total'] > 0:
 
