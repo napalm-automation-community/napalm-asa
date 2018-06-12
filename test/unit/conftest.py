@@ -65,7 +65,9 @@ class FakeASADevice(BaseTestDouble):
                 for command in list_of_commands:
                     cmd = re.sub(r'[\[\]\*\^\+\s\|\/]', '_', command)
                     filename += '_{}'.format(cmd)
-        output = self.read_json_file('test/unit/asa/mock_data/{}'.format(API_CALL_MOCK_FILES_MAPPING[filename]))
+        output = self.read_json_file(
+            'test/unit/asa/mock_data/{}'.format(API_CALL_MOCK_FILES_MAPPING[filename])
+            )
         """Fake an API request to the device by just returning the content of a file."""
         return output
 
