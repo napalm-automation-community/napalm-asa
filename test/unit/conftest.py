@@ -7,6 +7,7 @@ from napalm.base.test import conftest as parent_conftest
 from napalm.base.test.double import BaseTestDouble
 
 from napalm_asa import asa
+from _API_CALL_MOCK_FILES_MAPPING import API_CALL_MOCK_FILES_MAPPING
 import json
 import re
 
@@ -64,7 +65,7 @@ class FakeASADevice(BaseTestDouble):
                 for command in list_of_commands:
                     cmd = re.sub(r'[\[\]\*\^\+\s\|\/]', '_', command)
                     filename += '_{}'.format(cmd)
-        output = self.read_json_file('test/unit/asa/mock_data/{}.json'.format(filename))
+        output = self.read_json_file('test/unit/asa/mock_data/{}'.format(API_CALL_MOCK_FILES_MAPPING[filename]))
         """Fake an API request to the device by just returning the content of a file."""
         return output
 
