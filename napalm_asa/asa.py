@@ -347,32 +347,34 @@ class ASADriver(NetworkDriver):
     def get_interfaces_ip(self):
         """Get interfaces ip."""
         interfaces = {}
-        response = self._send_request('/interfaces/physical')
+        responses = []
 
-        if response['rangeInfo']['total'] > 0:
+        for endpoint in SUPPORTED_INTERFACES_ENDPOINTS:
+            responses.append(self._send_request(endpoint, throw=False))
 
-            for int_info in response['items']:
-
-                if int_info['ipAddress'] != "NoneSelected":
-                    interfaces[int_info['hardwareID']] = {}
-                    ipv4 = int_info['ipAddress']
-                    ip = ipv4['ip']['value']
-                    mask = ipv4['netMask']['value']
-                    network = ip + '/' + mask
-                    prefix_length = IPNetwork(network).prefixlen
-                    interfaces[int_info['hardwareID']]['ipv4'] = \
-                        {ip: {'prefix_length': prefix_length}}
-
-                if len(int_info['ipv6Info']['ipv6Addresses']) > 0:
-                    if int_info['hardwareID'] not in interfaces:
+        for response in responses:
+            if response['rangeInfo']['total'] > 0:
+                for int_info in response['items']:
+                    if int_info['ipAddress'] != "NoneSelected":
                         interfaces[int_info['hardwareID']] = {}
+                        ipv4 = int_info['ipAddress']
+                        ip = ipv4['ip']['value']
+                        mask = ipv4['netMask']['value']
+                        network = ip + '/' + mask
+                        prefix_length = IPNetwork(network).prefixlen
+                        interfaces[int_info['hardwareID']]['ipv4'] = \
+                            {ip: {'prefix_length': prefix_length}}
 
-                    interfaces[int_info['hardwareID']]['ipv6'] = {}
-                    for ipv6 in int_info['ipv6Info']['ipv6Addresses']:
-                        ip = ipv6['address']['value']
-                        prefix_length = ipv6['prefixLength']
-                        interfaces[int_info['hardwareID']]['ipv6'][ip] = \
-                            {'prefix_length': prefix_length}
+                    if len(int_info['ipv6Info']['ipv6Addresses']) > 0:
+                        if int_info['hardwareID'] not in interfaces:
+                            interfaces[int_info['hardwareID']] = {}
+
+                        interfaces[int_info['hardwareID']]['ipv6'] = {}
+                        for ipv6 in int_info['ipv6Info']['ipv6Addresses']:
+                            ip = ipv6['address']['value']
+                            prefix_length = ipv6['prefixLength']
+                            interfaces[int_info['hardwareID']]['ipv6'][ip] = \
+                                {'prefix_length': prefix_length}
 
         return interfaces
 
