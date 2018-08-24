@@ -1,0 +1,85 @@
+Interface GigabitEthernet0/0 "inside", is up, line protocol is up
+  Hardware is i82540EM rev03, BW 1000 Mbps, DLY 10 usec
+	Auto-Duplex(Full-duplex), Auto-Speed(1000 Mbps)
+	Input flow control is unsupported, output flow control is off
+	MAC address fa16.3eca.ccd3, MTU 1500
+	IP address 192.168.1.1, subnet mask 255.255.255.0
+	824939 packets input, 56231120 bytes, 0 no buffer
+	Received 6 broadcasts, 16340 runts, 0 giants
+	16340 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+	0 pause input, 0 resume input
+	0 L2 decode drops
+	854077 packets output, 61183465 bytes, 0 underruns
+	0 pause output, 0 resume output
+	0 output errors, 0 collisions, 1 interface resets
+	0 late collisions, 0 deferred
+	3 input reset drops, 0 output reset drops
+	input queue (blocks free curr/low): hardware (466/444)
+	output queue (blocks free curr/low): hardware (511/488)
+  Traffic Statistics for "inside":
+	17598 packets input, 777888 bytes
+	17459 packets output, 963779 bytes
+	22 packets dropped
+      1 minute input rate 0 pkts/sec,  47 bytes/sec
+      1 minute output rate 0 pkts/sec,  140 bytes/sec
+      1 minute drop rate, 0 pkts/sec
+      5 minute input rate 1 pkts/sec,  55 bytes/sec
+      5 minute output rate 1 pkts/sec,  66 bytes/sec
+      5 minute drop rate, 0 pkts/sec
+Interface GigabitEthernet0/1 "outside", is up, line protocol is up
+  Hardware is i82540EM rev03, BW 1000 Mbps, DLY 10 usec
+	Auto-Duplex(Full-duplex), Auto-Speed(1000 Mbps)
+	Input flow control is unsupported, output flow control is off
+	MAC address fa16.3eca.ccd3, MTU 1500
+	IP address 192.168.2.1, subnet mask 255.255.255.0
+	824939 packets input, 56231120 bytes, 0 no buffer
+	Received 6 broadcasts, 16340 runts, 0 giants
+	16340 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+	0 pause input, 0 resume input
+	0 L2 decode drops
+	854077 packets output, 61183465 bytes, 0 underruns
+	0 pause output, 0 resume output
+	0 output errors, 0 collisions, 1 interface resets
+	0 late collisions, 0 deferred
+	3 input reset drops, 0 output reset drops
+	input queue (blocks free curr/low): hardware (466/444)
+	output queue (blocks free curr/low): hardware (511/488)
+  Traffic Statistics for "outside":
+	17598 packets input, 777888 bytes
+	17459 packets output, 963779 bytes
+	22 packets dropped
+      1 minute input rate 0 pkts/sec,  47 bytes/sec
+      1 minute output rate 0 pkts/sec,  140 bytes/sec
+      1 minute drop rate, 0 pkts/sec
+      5 minute input rate 1 pkts/sec,  55 bytes/sec
+      5 minute output rate 1 pkts/sec,  66 bytes/sec
+      5 minute drop rate, 0 pkts/sec
+Interface Management0/0 "mgmt", is up, line protocol is up
+  Hardware is i82540EM rev03, BW 1000 Mbps, DLY 10 usec
+	Auto-Duplex(Full-duplex), Auto-Speed(1000 Mbps)
+	Input flow control is unsupported, output flow control is off
+	Available but not configured via nameif
+	MAC address 5e00.0000.0000, MTU not set
+	IP address 172.16.62.100, subnet mask 255.255.255.0
+	586449 packets input, 37537116 bytes, 0 no buffer
+	Received 1693 broadcasts, 4399 runts, 0 giants
+	4399 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+	0 pause input, 0 resume input
+	4391 L2 decode drops
+	1795 packets output, 160584 bytes, 0 underruns
+	0 pause output, 0 resume output
+	0 output errors, 0 collisions, 1 interface resets
+	0 late collisions, 0 deferred
+	10 input reset drops, 0 output reset drops
+	input queue (blocks free curr/low): hardware (470/461)
+	output queue (blocks free curr/low): hardware (511/507)
+  Traffic Statistics for "mgmt":
+	17598 packets input, 777888 bytes
+	17459 packets output, 963779 bytes
+	22 packets dropped
+      1 minute input rate 0 pkts/sec,  47 bytes/sec
+      1 minute output rate 0 pkts/sec,  140 bytes/sec
+      1 minute drop rate, 0 pkts/sec
+      5 minute input rate 1 pkts/sec,  55 bytes/sec
+      5 minute output rate 1 pkts/sec,  66 bytes/sec
+      5 minute drop rate, 0 pkts/sec
