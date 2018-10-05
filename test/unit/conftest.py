@@ -7,7 +7,6 @@ from napalm.base.test import conftest as parent_conftest
 from napalm.base.test.double import BaseTestDouble
 
 from napalm_asa import asa
-import sys
 import re
 import requests
 import requests_mock
@@ -83,4 +82,4 @@ class FakeASADevice(BaseTestDouble):
         else:
             return (False, response.status_code)
 
-        return response 
+        return response

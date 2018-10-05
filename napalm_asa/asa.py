@@ -23,14 +23,11 @@ from __future__ import unicode_literals
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 import json
-import base64
 import re
 from string import whitespace
-from collections import OrderedDict
 from netaddr import IPNetwork
 
 # import third party lib
-from netaddr import IPNetwork
 
 from napalm.base import NetworkDriver
 from napalm.base.utils import py23_compat
@@ -41,6 +38,7 @@ from napalm.base.exceptions import (
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 IPV4_ADDR_REGEX = r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"
+
 
 class RespFetcherHttps:
     """Response fetcher."""
@@ -70,8 +68,8 @@ class RespFetcherHttps:
         else:
             return (False, response.status_code)
 
-        return response 
-        
+        return response
+
     def get_resp(self, endpoint="", data=None, params={}, throw=True, returnObject=False):
         """Get response from device and returne parsed json."""
         full_url = self.base_url + endpoint
@@ -101,6 +99,7 @@ class RespFetcherHttps:
                 raise ConnectionException(py23_compat.text_type(e))
             else:
                 return False
+
 
 class ASADriver(NetworkDriver):
     """Napalm driver for Cisco ASA."""
@@ -174,15 +173,34 @@ class ASADriver(NetworkDriver):
 
         return result_dict
 
+    def _nameif(self):
+        """Get Interface Name for configured interfaces"""
+
+        response = self._send_request('/show+nameif')
+
+        result_dict = {}
+
+        for line in response.splitlines():
+            columns = line.split()
+            if columns[0] == "Interface":
+                continue
+            else:
+                result_dict[columns[1]] = {"interface": columns[0], "security_level": columns[2]}
+
+        return result_dict
+
     def get_interfaces_ip(self):
         """Get interfaces ip."""
         interfaces = {}
         show_interface = self._send_request('/show+interface')
+        show_ipv6_interface = self._send_request('/show+ipv6+interface')
+        nameif = self._nameif()
 
         INTERNET_ADDRESS = r'\s+(?:IP address|Secondary address)'
-        INTERNET_ADDRESS += r' (?P<ip>{}), subnet mask (?P<mask>{})'.format(IPV4_ADDR_REGEX, IPV4_ADDR_REGEX)
-        # LINK_LOCAL_ADDRESS = r'\s+IPv6 is enabled, link-local address is (?P<ip>[a-fA-F0-9:]+)'
-        # GLOBAL_ADDRESS = r'\s+(?P<ip>[a-fA-F0-9:]+), subnet is (?:[a-fA-F0-9:]+)/(?P<prefix>\d+)'
+        INTERNET_ADDRESS += r' (?P<ip>{}), subnet mask (?P<mask>{})'.format(IPV4_ADDR_REGEX,
+                                                                            IPV4_ADDR_REGEX)
+        LINK_LOCAL_ADDRESS = r'\s+IPv6 is enabled, link-local address is (?P<ip>[a-fA-F0-9:]+)'
+        GLOBAL_ADDRESS = r'\s+(?P<ip>[a-fA-F0-9:]+), subnet is (?:[a-fA-F0-9:]+)/(?P<prefix>\d+)'
 
         for line in show_interface.splitlines():
             if(len(line.strip()) == 0):
@@ -193,15 +211,37 @@ class ASADriver(NetworkDriver):
             m = re.match(INTERNET_ADDRESS, line)
             if m:
                 ip, prefix = m.groups()
-                ip_network = IPNetwork("{}/{}".format(ip,prefix))
+                ip_network = IPNetwork("{}/{}".format(ip, prefix))
                 ipv4.update({ip: {"prefix_length": ip_network.prefixlen}})
                 interfaces[interface_name] = {'ipv4': ipv4}
+
+        if '% Invalid input detected at' not in show_ipv6_interface:
+            for line in show_ipv6_interface.splitlines():
+                if(len(line.strip()) == 0):
+                    continue
+                if(line[0] != ' '):
+                    ifname = line.split()[0]
+                    if ifname in nameif.keys():
+                        ifname = nameif[ifname]["interface"]
+                    ipv6 = {}
+                    if ifname not in interfaces:
+                        interfaces[ifname] = {'ipv6': ipv6}
+                    else:
+                        interfaces[ifname].update({'ipv6': ipv6})
+                m = re.match(LINK_LOCAL_ADDRESS, line)
+                if m:
+                    ip = m.group(1)
+                    ipv6.update({ip: {"prefix_length": 10}})
+                m = re.match(GLOBAL_ADDRESS, line)
+                if m:
+                    ip, prefix = m.groups()
+                    ipv6.update({ip: {"prefix_length": int(prefix)}})
 
         return interfaces
 
     def is_alive(self):
         """Check if connection is still valid."""
         alive, code = self.device.test_connection()
-        status = {"is_alive": alive }
+        status = {"is_alive": alive}
 
         return status
