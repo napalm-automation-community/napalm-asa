@@ -11,12 +11,25 @@
       "192.168.1.1": {
         "prefix_length": 24
       }
+    },
+    "ipv6": {
+        "fe80::f816:3eff:feca:ccd3": {
+            "prefix_length": 10
+        },
+        "2002::1": {
+            "prefix_length": 64
+        }
     }
   },
   "Management0/0": {
     "ipv4": {
       "172.16.62.100": {
         "prefix_length": 24
+      }
+    },
+    "ipv6": {
+      "fe80::c009:24ff:feac:0": {
+          "prefix_length": 10
       }
     }
   }

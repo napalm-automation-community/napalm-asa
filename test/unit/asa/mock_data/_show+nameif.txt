@@ -1,0 +1,4 @@
+Interface                Name                     Security
+GigabitEthernet0/0       inside                   100
+GigabitEthernet0/1       outside                  100
+Management0/0            mgmt                       0

@@ -1,0 +1,34 @@
+inside is up, line protocol is up
+  IPv6 is enabled, link-local address is fe80::f816:3eff:feca:ccd3
+  Global unicast address(es):
+    2002::1, subnet is 2002::/64
+  Joined group address(es):
+    ff02::1:ff00:1
+    ff02::1:ffca:ccd3
+    ff02::2
+    ff02::1
+  ICMP error messages limited to one every 100 milliseconds
+  ICMP redirects are enabled
+  ND DAD is enabled, number of DAD attempts: 1
+  ND reachable time is 30000 milliseconds
+  ND advertised reachable time is 0 milliseconds
+  ND advertised retransmit interval is 1000 milliseconds
+  ND router advertisements are sent every 200 seconds
+  ND router advertisements live for 1800 seconds
+  Hosts use stateless autoconfig for addresses.
+mgmt is up, line protocol is up
+  IPv6 is enabled, link-local address is fe80::c009:24ff:feac:0
+  No global unicast address is configured
+  Joined group address(es):
+    ff02::2
+    ff02::1:ffac:0
+    ff02::1
+  ICMP error messages limited to one every 100 milliseconds
+  ICMP redirects are enabled
+  ND DAD is enabled, number of DAD attempts: 1
+  ND reachable time is 30000 milliseconds
+  ND advertised reachable time is 0 milliseconds
+  ND advertised retransmit interval is 1000 milliseconds
+  ND router advertisements are sent every 200 seconds
+  ND router advertisements live for 1800 seconds
+  Hosts use stateless autoconfig for addresses.
