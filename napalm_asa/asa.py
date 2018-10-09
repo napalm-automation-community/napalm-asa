@@ -31,6 +31,7 @@ from netaddr import IPNetwork
 
 from napalm.base import NetworkDriver
 from napalm.base.utils import py23_compat
+from napalm.base.helpers import mac
 from napalm.base.exceptions import (
     ConnectionException,
     CommandErrorException,
@@ -238,6 +239,49 @@ class ASADriver(NetworkDriver):
                     ipv6.update({ip: {"prefix_length": int(prefix)}})
 
         return interfaces
+
+    def get_arp_table(self):
+
+        """
+        Returns a list of dictionaries having the following set of keys:
+            * interface (string)
+            * mac (string)
+            * ip (string)
+            * age (float)
+        Example::
+            [
+                {
+                    'interface' : 'MgmtEth0/RSP0/CPU0/0',
+                    'mac'       : '5C:5E:AB:DA:3C:F0',
+                    'ip'        : '172.17.17.1',
+                    'age'       : 1454496274.84
+                },
+                {
+                    'interface' : 'MgmtEth0/RSP0/CPU0/0',
+                    'mac'       : '5C:5E:AB:DA:3C:FF',
+                    'ip'        : '172.17.17.2',
+                    'age'       : 1435641582.49
+                }
+            ]
+        """
+        results = []
+        show_arp = self._send_request('/show+arp')
+
+        for line in show_arp.splitlines():
+            clean_line = line.strip().split()
+            if(len(clean_line) == 0):
+                continue
+            if(clean_line[-1] == "-" or clean_line[-1] == "alias"):
+                age = 0.0
+            else:
+                age = float(clean_line[-1])
+
+            entry = {'interface': clean_line[0], 'mac': mac(clean_line[2]),
+                     'ip': clean_line[1], 'age': age}
+
+            results.append(entry)
+
+        return results
 
     def is_alive(self):
         """Check if connection is still valid."""
