@@ -37,11 +37,11 @@ Check the full [NAPALM Docs](https://napalm.readthedocs.io/en/latest/index.html)
 | get_bgp_config            |  ❌      |
 | get_bgp_neighbors         |  ❌      |
 | get_bgp_neighbors_detail  |  ❌      |
-| get_config                |  ✅      |
+| get_config                |  ❌      |
 | get_environment           |  ❌      |
-| get_facts                 |  ✅      |
+| get_facts                 |  ❌      |
 | get_firewall_policies     |  ❌      |
-| get_interfaces            |  ✅      |
+| get_interfaces            |  ❌      |
 | get_interfaces_counters   |  ❌      |
 | get_interfaces_ip         |  ✅      |
 | get_ipv6_neighbors_table  |  ❌      |
