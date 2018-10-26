@@ -1,5 +1,5 @@
 {
-	"running": "mock running config\n",
-	"startup": "mock startup config\n",
+	"running": ": Saved\n\n:\n: Serial Number: 9A2EV42CV3U\n: Hardware:   ASAv, 2048 MB RAM, CPU Pentium II 2600 MHz\n: Written by enable_15 at 23:44:26.179 UTC Thu Oct 25 2018\n!\nASA Version 9.8(2)\n!\nhostname asav-1\nenable password $sha512$5000$7UXo35AqYVygCDEXVEvXAw==$ZXbULUAnGvzfjfNKHc2Caw== pbkdf2\nxlate per-session deny tcp any4 any4\nxlate per-session deny tcp any4 any6\nxlate per-session deny tcp any6 any4\nxlate per-session deny tcp any6 any6\nxlate per-session deny udp any4 any4 eq domain\nxlate per-session deny udp any4 any6 eq domain\nxlate per-session deny udp any6 any4 eq domain\nxlate per-session deny udp any6 any6 eq domain\npasswd 2KFQnbNIdI.2KYOU encrypted\nnames\n",
+	"startup": ": Saved\n\n:\n: Serial Number: 9A2EV42CV3U\n: Hardware:   ASAv, 2048 MB RAM, CPU Pentium II 2600 MHz\n: Written by enable_15 at 23:44:26.179 UTC Thu Oct 25 2018\n!\nASA Version 9.8(2)\n!\nhostname asav-1\nenable password $sha512$5000$7UXo35AqYVygCDEXVEvXAw==$ZXbULUAnGvzfjfNKHc2Caw== pbkdf2\nxlate per-session deny tcp any4 any4\nxlate per-session deny tcp any4 any6\nxlate per-session deny tcp any6 any4\nxlate per-session deny tcp any6 any6\nxlate per-session deny udp any4 any4 eq domain\nxlate per-session deny udp any4 any6 eq domain\nxlate per-session deny udp any6 any4 eq domain\nxlate per-session deny udp any6 any6 eq domain\npasswd 2KFQnbNIdI.2KYOU encrypted\nnames\n",
 	"candidate": ""
 }
