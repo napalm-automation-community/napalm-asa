@@ -289,3 +289,38 @@ class ASADriver(NetworkDriver):
         status = {"is_alive": alive}
 
         return status
+
+    def get_config(self, retrieve='all'):
+        """
+        Return the configuration of a device.
+        Args:
+            retrieve(string): Which configuration type you want to populate, default is all of them.
+                              The rest will be set to "".
+        Returns:
+          The object returned is a dictionary with a key for each configuration store:
+            - running(string) - Representation of the native running configuration
+            - candidate(string) - Representation of the native candidate configuration. If the
+              device doesnt differentiate between running and startup configuration this will an
+              empty string (not supported on ASA)
+            - startup(string) - Representation of the native startup configuration. If the
+              device doesnt differentiate between running and startup configuration this will an
+              empty string
+        """
+        config = {
+            'startup': '',
+            'running': '',
+            'candidate': '',
+        }
+
+        commands = {}
+
+        if retrieve.lower() in ['startup', 'all']:
+            commands["startup"] = "/show+startup-config"
+        if retrieve.lower() in ['running', 'all']:
+            commands["running"] = "/show+startup-config"
+
+        if retrieve.lower() in ['running', 'startup', 'all']:
+            for key, cmd in commands.items():
+                config[key] = self._send_request(cmd)
+
+        return config
