@@ -324,3 +324,78 @@ class ASADriver(NetworkDriver):
                 config[key] = self._send_request(cmd)
 
         return config
+
+    def get_interfaces(self):
+        """
+        Returns a dictionary of dictionaries. The keys for the first dictionary will be the \
+        interfaces in the devices. The inner dictionary will containing the following data for \
+        each interface:
+         * is_up (True/False)
+         * is_enabled (True/False)
+         * description (string)
+         * last_flapped (int in seconds)
+         * speed (int in Mbit)
+         * mac_address (string)
+        Example::
+            {
+            u'Management1':
+                {
+                'is_up': False,
+                'is_enabled': False,
+                'description': '',
+                'last_flapped': -1,
+                'speed': 1000,
+                'mac_address': 'FA:16:3E:57:33:61',
+                },
+            }
+        """
+        interfaces = {}
+        show_interface = self._send_request('/show+interface')
+
+        status_regex = r'.*is (.*), line protocol is (.*)'
+        description_regex = r'.*Description: (.*)'
+        speed_regex = r'.*Duplex\(.*\),\s+(.*)\((.*)\)'
+        mac_regex = r"\s+MAC address (.{14}),"
+        interface_name = ''
+
+        for line in show_interface.splitlines():
+            if(len(line.strip()) == 0):
+                continue
+            # match interface name, and statuses
+            if(line[0] not in whitespace):
+                interface_name = line.split()[1]
+                m = re.match(status_regex, line.strip())
+                if m:
+
+                    is_enabled = True if m.group(1) == 'up' else False
+                    is_up = True if m.group(2) == 'up' else False
+                    interfaces[interface_name] = {
+                                                    'is_up': is_up,
+                                                    'is_enabled': is_enabled,
+                                                    'description': '',
+                                                    'last_flapped': -1.0,
+                                                    'speed': -1,
+                                                    'mac_address': '',
+                                                }
+            # match description
+            dm = re.match(description_regex, line)
+            if dm:
+                interfaces[interface_name]['description'] = dm.group(1)
+
+            # match speed
+            sm = re.match(speed_regex, line)
+            if sm:
+                speed = ''
+                s1, s2 = sm.groups()
+                if s1 == 'Auto-Speed':
+                    speed = int(s2.split()[0])
+                else:
+                    speed = int(s1.split()[0])
+                interfaces[interface_name]['speed'] = speed
+
+            # match mac address
+            mm = re.match(mac_regex, line)
+            if mm:
+                interfaces[interface_name]['mac_address'] = mm.group(1)
+
+        return interfaces

@@ -2,6 +2,7 @@ Interface GigabitEthernet0/0 "inside", is up, line protocol is up
   Hardware is i82540EM rev03, BW 1000 Mbps, DLY 10 usec
 	Auto-Duplex(Full-duplex), Auto-Speed(1000 Mbps)
 	Input flow control is unsupported, output flow control is off
+	Description: inside
 	MAC address fa16.3eca.ccd3, MTU 1500
 	IP address 192.168.1.1, subnet mask 255.255.255.0
 	824939 packets input, 56231120 bytes, 0 no buffer
@@ -30,6 +31,7 @@ Interface GigabitEthernet0/1 "outside", is up, line protocol is up
   Hardware is i82540EM rev03, BW 1000 Mbps, DLY 10 usec
 	Auto-Duplex(Full-duplex), Auto-Speed(1000 Mbps)
 	Input flow control is unsupported, output flow control is off
+	Description: outside
 	MAC address fa16.3eca.ccd3, MTU 1500
 	IP address 192.168.2.1, subnet mask 255.255.255.0
 	824939 packets input, 56231120 bytes, 0 no buffer
@@ -58,6 +60,7 @@ Interface Management0/0 "mgmt", is up, line protocol is up
   Hardware is i82540EM rev03, BW 1000 Mbps, DLY 10 usec
 	Auto-Duplex(Full-duplex), Auto-Speed(1000 Mbps)
 	Input flow control is unsupported, output flow control is off
+	Description: oob mgmt
 	Available but not configured via nameif
 	MAC address 5e00.0000.0000, MTU not set
 	IP address 172.16.62.100, subnet mask 255.255.255.0
