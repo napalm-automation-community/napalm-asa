@@ -1,26 +1,26 @@
 {
   "GigabitEthernet0/1": {
     "is_enabled": true,
-    "description": "",
+    "description": "outside",
     "last_flapped": -1.0,
     "is_up": true,
-    "mac_address": "008d.e011.ef02",
-    "speed": 0
+    "mac_address": "fa16.3eca.ccd3",
+    "speed": 1000
   },
   "GigabitEthernet0/0": {
     "is_enabled": true,
-    "description": "",
+    "description": "inside",
     "last_flapped": -1.0,
     "is_up": true,
-    "mac_address": "008d.e011.ef01",
-    "speed": 0
+    "mac_address": "fa16.3eca.ccd3",
+    "speed": 1000
   },
   "Management0/0": {
     "is_enabled": true,
-    "description": "",
+    "description": "oob mgmt",
     "last_flapped": -1.0,
     "is_up": true,
-    "mac_address": "008d.e011.ef00",
-    "speed": 0
+    "mac_address": "5e00.0000.0000",
+    "speed": 1000
   }
 }
