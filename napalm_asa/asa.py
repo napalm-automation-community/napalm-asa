@@ -30,7 +30,6 @@ from collections import OrderedDict
 from netaddr import IPNetwork
 
 from napalm.base import NetworkDriver
-from napalm.base.utils import py23_compat
 from napalm.base.exceptions import (
     ConnectionException,
     CommandErrorException,
@@ -72,7 +71,7 @@ class RespFetcherHttps:
             else:
                 return (False, token_request.status_code)
         except requests.exceptions.RequestException as e:
-            raise ConnectionException(py23_compat.text_type(e))
+            raise ConnectionException(str(e))
 
     def delete_token(self):
         """Delete auth token."""
@@ -87,7 +86,7 @@ class RespFetcherHttps:
             else:
                 return (False, token_delete_request.status_code)
         except requests.exceptions.RequestException as e:
-            raise ConnectionException(py23_compat.text_type(e))
+            raise ConnectionException(str(e))
 
     def get_resp(self, endpoint="", data=None, params={}, throw=True):
         """Get response from device and returne parsed json."""
@@ -112,7 +111,7 @@ class RespFetcherHttps:
             return f.json()
         except requests.exceptions.RequestException as e:
             if throw:
-                raise ConnectionException(py23_compat.text_type(e))
+                raise ConnectionException(str(e))
             else:
                 return False
 
