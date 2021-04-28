@@ -3,7 +3,7 @@ API_CALL_MOCK_FILES_MAPPING = {
     "_cli_show_running-config": "_cli_show_running-config.json",
     "_cli_show_startup-config": "_cli_show_startup-config.json",
     "_cli_show_startup-config_show_running-config": "_cli_show_\
-        startup-config_show_running-config.json",
+startup-config_show_running-config.json",
     "_interfaces_physical": "_interfaces_physical.json",
     "_interfaces_portchannel": "_interfaces_portchannel.json",
     "_interfaces_redundant": "_interfaces_redundant.json",
