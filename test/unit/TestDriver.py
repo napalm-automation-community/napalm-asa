@@ -28,17 +28,20 @@ class TestConfigDriver(unittest.TestCase, TestConfigNetworkDriver):
     @classmethod
     def setUpClass(cls):
         """Run before starting the tests."""
-        hostname = '127.0.0.1'
-        username = 'vagrant'
-        password = 'vagrant'
-        cls.vendor = 'asa'
+        hostname = "127.0.0.1"
+        username = "vagrant"
+        password = "vagrant"
+        cls.vendor = "asa"
 
-        optional_args = {'port': 12443, }
-        cls.device = asa.ASADriver(hostname, username, password, timeout=60,
-                                   optional_args=optional_args)
+        optional_args = {
+            "port": 12443,
+        }
+        cls.device = asa.ASADriver(
+            hostname, username, password, timeout=60, optional_args=optional_args
+        )
         cls.device.open()
 
-        cls.device.load_replace_candidate(filename='%s/initial.conf' % cls.vendor)
+        cls.device.load_replace_candidate(filename="%s/initial.conf" % cls.vendor)
         cls.device.commit_config()
 
 
@@ -50,14 +53,17 @@ class TestGetterDriver(unittest.TestCase, TestGettersNetworkDriver):
         """Run before starting the tests."""
         cls.mock = True
 
-        hostname = '127.0.0.1'
-        username = 'vagrant'
-        password = 'vagrant'
-        cls.vendor = 'asa'
+        hostname = "127.0.0.1"
+        username = "vagrant"
+        password = "vagrant"
+        cls.vendor = "asa"
 
-        optional_args = {'port': 443, }
-        cls.device = asa.ASADriver(hostname, username, password, timeout=60,
-                                   optional_args=optional_args)
+        optional_args = {
+            "port": 443,
+        }
+        cls.device = asa.ASADriver(
+            hostname, username, password, timeout=60, optional_args=optional_args
+        )
 
         if cls.mock:
             cls.device.device = FakeDevice()
@@ -82,16 +88,16 @@ class FakeDevice:
 
     def get_resp(self, endpoint="", data=None):
         """Fake method to read from file instead of connecting to device."""
-        filename = re.sub(r'\/', '_', endpoint)
+        filename = re.sub(r"\/", "_", endpoint)
 
         if data is not None:
             parsed_data = json.loads(data)
             if "commands" in parsed_data:
                 list_of_commands = parsed_data.get("commands")
                 for command in list_of_commands:
-                    cmd = re.sub(r'[\[\]\*\^\+\s\|\/]', '_', command)
-                    filename += '_{}'.format(cmd)
+                    cmd = re.sub(r"[\[\]\*\^\+\s\|\/]", "_", command)
+                    filename += "_{}".format(cmd)
 
-        output = self.read_json_file('asa/mock_data/{}.json'.format(filename))
+        output = self.read_json_file("asa/mock_data/{}.json".format(filename))
         """Fake na API request to the device by just returning the content of a file."""
         return output

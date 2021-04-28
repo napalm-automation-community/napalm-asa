@@ -15,4 +15,4 @@
 """napalm-asa package."""
 from napalm_asa.asa import ASADriver  # noqa
 
-__all__ = ('ASADriver',)
+__all__ = ("ASADriver",)
