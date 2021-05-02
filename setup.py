@@ -12,11 +12,13 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="napalm-asa",
-    version="0.1.3",
+    version="0.1.4",
     packages=find_packages(),
     author="Diogo Assumpcao",
     author_email="daa@hey.com",
     description="Cisco ASA driver for NAPALM",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     classifiers=[
         "Topic :: Utilities",
         "Programming Language :: Python",
