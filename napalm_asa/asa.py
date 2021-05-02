@@ -21,20 +21,23 @@ Read https://napalm.readthedocs.io for more information.
 from __future__ import unicode_literals
 
 import requests
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
-import json
 import re
+import json
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 from collections import OrderedDict
 
 # import third party lib
 from netaddr import IPNetwork
 
+# Napalm base imports
+from napalm.base.helpers import sanitize_configs
 from napalm.base import NetworkDriver
 from napalm.base.exceptions import (
     ConnectionException,
     CommandErrorException,
 )
 from napalm_asa._SUPPORTED_INTERFACES_ENDPOINTS import SUPPORTED_INTERFACES_ENDPOINTS
+from napalm_asa.constants import ASA_SANITIZE_FILTERS
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
@@ -369,6 +372,9 @@ class ASADriver(NetworkDriver):
             config["startup"] = results[startup_cmd]
         if retrieve.lower() in ["running", "all"]:
             config["running"] = results[running_cmd]
+
+        if sanitized:
+            return sanitize_configs(config, ASA_SANITIZE_FILTERS)
 
         return config
 
