@@ -7,9 +7,12 @@ __author__ = "Diogo Assumpcao"
 with open("requirements.txt", "r") as fs:
     reqs = [r for r in fs.read().splitlines() if (len(r) > 0 and not r.startswith("#"))]
 
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
 setup(
     name="napalm-asa",
-    version="0.1.2",
+    version="0.1.3",
     packages=find_packages(),
     author="Diogo Assumpcao",
     author_email="daa@hey.com",
