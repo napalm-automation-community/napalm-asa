@@ -2,18 +2,18 @@
 
 from setuptools import setup, find_packages
 
-__author__ = "David Barroso <dbarrosop@dravetech.com>"
+__author__ = "Diogo Assumpcao"
 
 with open("requirements.txt", "r") as fs:
     reqs = [r for r in fs.read().splitlines() if (len(r) > 0 and not r.startswith("#"))]
 
 setup(
     name="napalm-asa",
-    version="0.1.0",
+    version="0.1.2",
     packages=find_packages(),
     author="Diogo Assumpcao",
     author_email="daa@hey.com",
-    description="Network Automation and Programmability Abstraction Layer with Multivendor support",
+    description="Cisco ASA driver for NAPALM",
     classifiers=[
         "Topic :: Utilities",
         "Programming Language :: Python",
