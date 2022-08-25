@@ -334,7 +334,7 @@ class ASADriver(NetworkDriver):
                         "is_enabled": not int_info["shutdown"],
                         "description": int_info["interfaceDesc"],
                         "last_flapped": -1.0,
-                        "speed": 0,
+                        "speed": 0.0,
                         "mtu": 0,
                         "mac_address": "",
                     }
